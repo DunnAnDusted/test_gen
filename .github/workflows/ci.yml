@@ -1,0 +1,37 @@
+name: Rust CI
+
+on:
+  push:
+    branches: "**"
+    paths: "**.rs"
+  pull_request:
+    branches: "main"
+    paths: "**.rs"
+  workflow_call:
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        toolchains:
+          - stable
+          - beta
+          - nightly
+          - 1.6.1 # MSRV
+    steps:
+    - uses: actions/checkout@v3
+    - run: rustup update ${{ matrix.toolchain }} && rustup default ${{ matrix.toolchain }}
+    # Validating the formatting of the project shouldn't do anything currently,
+    # due to the `rustfmt`'s macro formatting options being nightly exlusive, and disabled by default,
+    # but hopefully shouldn't add any significant overhead in jobs, and require minimal maintainance in future...
+    - name: Validate Formatting
+      run: cargo fmt --check --verbose
+    - name: Validate Clippy
+      run: cargo clippy -D warnings --verbose
+    - name: Validate Tests
+      run: cargo test --verbose
+        
