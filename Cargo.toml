@@ -2,7 +2,26 @@
 name = "test_gen"
 version = "0.1.0"
 edition = "2021"
+description = "A comprehensive declarative macro, for concisely defining parameterised tests."
+authors = ["Andrew Dunn <andrew.dunn@ajja.org.uk>"]
+licence = "BSD-3-Clause"
+documentation = "https://docs.rs/crate/test_gen"
+repository = "https://github.com/DunnAnDusted/test_gen"
+readme = "README.md"
+keywords = [
+	"test", "tests", "testing",
+	"unit_test", "test-case", "test_case",
+	"parameterized", "parametrized", "code-gen",
+	"code_gen", "macro", "macros",
+	"unit", "units", "unit-test",
+	"unit_test", "unit-tests", "unit_tests",
+	"unit-testing", "unit_testing", "integration", 
+	"integration-test", "integration_test", "integration-tests",
+	"integration_tests", "integration-testing", "integration_testing"
+]
+categories = ["development-tools", "development-tools::testing", "no-std"]
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[package.metadata]
+msrv = "1.6.3"
 
 [dependencies]
