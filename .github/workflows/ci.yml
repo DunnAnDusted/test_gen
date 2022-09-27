@@ -31,7 +31,7 @@ jobs:
     - name: Validate Formatting
       run: cargo fmt --check --verbose
     - name: Validate Clippy
-      run: cargo clippy -D warnings --verbose
+      run: cargo clippy -- -D warnings --verbose
     - name: Validate Tests
       run: cargo test --verbose
         
