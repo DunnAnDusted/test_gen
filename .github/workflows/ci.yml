@@ -3,10 +3,14 @@ name: Rust CI
 on:
   push:
     branches: "**"
-    paths: "**.rs"
+    paths:
+      - "**.rs"
+      - "**.toml"
   pull_request:
     branches: "main"
-    paths: "**.rs"
+    paths:
+      - "**.rs"
+      - "**.toml"
   workflow_call:
 
 env:
