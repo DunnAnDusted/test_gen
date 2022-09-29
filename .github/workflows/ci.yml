@@ -1,11 +1,6 @@
 name: Rust CI
 
 on:
-  push:
-    branches: "**"
-    paths:
-      - "**.rs"
-      - "**.toml"
   pull_request:
     branches: "main"
     paths:
