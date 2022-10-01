@@ -23,7 +23,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Validate Formatting
-      - run: cargo fmt --check --verbose
+        run: cargo fmt --check --verbose
   validate-build:
     needs: validate-fmt
     runs-on: ubuntu-latest
