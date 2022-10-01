@@ -6,7 +6,6 @@ on:
     paths:
       - "**.rs"
       - "**.toml"
-      - "!Cargo.toml"
   workflow_call:
 
 env:
@@ -24,6 +23,7 @@ jobs:
       - uses: actions/checkout@v3
       - name: Validate Formatting
         run: cargo fmt --check --verbose
+
   validate-build:
     needs: validate-fmt
     runs-on: ubuntu-latest
@@ -41,4 +41,4 @@ jobs:
       run: cargo clippy -- -D warnings --verbose
     - name: Validate Tests
       run: cargo test --verbose
-        
+
