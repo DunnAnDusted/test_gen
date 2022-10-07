@@ -1,0 +1,46 @@
+name: CD
+
+on:
+  release:
+    types:
+      - published
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry Run'
+        type: boolean
+        default: true
+      args:
+        description: 'Command Arguments'
+        required: false
+        type: string
+        default: ''
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  validate-release:
+    if: ${{ !contains(input.args, '--token') && github.ref_name == 'main' }}
+    uses: ./.github/workflows/ci.yml
+  publish-release:
+    needs: validate-release
+    runs-on: ubuntu-latest
+    env:
+      ARGS: ${{ input.args }}
+      DRY_RUN: ${{ inputs.dry_run }}
+      RELEASE: ${{ github.event_name == 'release' }}
+      CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run Release
+        run: |
+          if $RELEASE == true; then
+            cargo publish --verbose
+          else  
+            if $DRY_RUN == true; then
+              echo $ARGS $DRY_RUN >> $ARGS
+            fi
+
+            cargo publish $ARGS
+          fi
