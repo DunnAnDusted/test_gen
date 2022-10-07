@@ -8,17 +8,7 @@ license = "BSD-3-Clause"
 documentation = "https://docs.rs/crate/test_gen"
 repository = "https://github.com/DunnAnDusted/test_gen"
 readme = "README.md"
-keywords = [
-	"test", "tests", "testing",
-	"unit_test", "test-case", "test_case",
-	"parameterized", "parametrized", "code-gen",
-	"code_gen", "macro", "macros",
-	"unit", "units", "unit-test",
-	"unit_test", "unit-tests", "unit_tests",
-	"unit-testing", "unit_testing", "integration", 
-	"integration-test", "integration_test", "integration-tests",
-	"integration_tests", "integration-testing", "integration_testing"
-]
+keywords = ["test", "parameterized", "parametrized", "code-gen", "macro"]
 categories = ["development-tools", "development-tools::testing", "no-std"]
 
 [package.metadata]
