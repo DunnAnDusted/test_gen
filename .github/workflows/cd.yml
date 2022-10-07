@@ -39,7 +39,7 @@ jobs:
             cargo publish --verbose
           else  
             if $DRY_RUN == true; then
-              echo $ARGS $DRY_RUN >> $ARGS
+              echo ARGS=$ARGS $DRY_RUN >> $GITHUB_ENV
             fi
 
             cargo publish $ARGS
