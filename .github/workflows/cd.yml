@@ -39,7 +39,7 @@ jobs:
             cargo publish --verbose
           else  
             if $DRY_RUN == true; then
-              ARGS="$ARGS $DRY_RUN"
+              ARGS="$ARGS --dry-run"
             fi
 
             cargo publish $ARGS
