@@ -21,7 +21,7 @@ env:
 
 jobs:
   validate-release:
-    if: ${{ !contains(input.args, '--token') && github.ref_name == 'main' }}
+    if: ${{ !contains(inputs.args, '--token') && github.ref_name == 'main' }}
     uses: ./.github/workflows/ci.yml
   publish-release:
     needs: validate-release
