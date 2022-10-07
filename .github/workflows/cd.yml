@@ -27,7 +27,7 @@ jobs:
     needs: validate-release
     runs-on: ubuntu-latest
     env:
-      ARGS: ${{ input.args }}
+      ARGS: ${{ inputs.args }}
       DRY_RUN: ${{ inputs.dry_run }}
       RELEASE: ${{ github.event_name == 'release' }}
       CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
