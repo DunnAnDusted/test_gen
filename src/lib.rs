@@ -2,8 +2,17 @@
 
 #[macro_export]
 macro_rules! test_gen {
-    ($helper:expr, should_panic => { $($case_name:ident: { ($($case_args:expr),+) $(, [$($attr:meta),+])? }),+ }) => {
-        $crate::test_gen! { $helper => { $($case_name: { ($($case_args),+) $(, [should_panic, $($attr),+])? }),+ } }
+    (ignore, should_panic, $helper:expr => { $($case_name:ident: { ($($case_args:expr),+) $(, [$($attr:meta),+])? }),+ }) => {
+        $crate::test_gen! { should_panic, ignore, $helper => { $($case_name: { ($($case_args),+) $(, [$($attr),+])? }),+ } }
+    };
+    (should_panic, ignore, $helper:expr => { $($case_name:ident: { ($($case_args:expr),+) $(, [$($attr:meta),+])? }),+ }) => {
+        $crate::test_gen! { $helper => { $($case_name: { ($($case_args),+), [should_panic, ignore $(, $($attr),+)?] }),+ } }
+    };
+    (should_panic, $helper:expr => { $($case_name:ident: { ($($case_args:expr),+) $(, [$($attr:meta),+])? }),+ }) => {
+        $crate::test_gen! { $helper => { $($case_name: { ($($case_args),+), [should_panic $(, $($attr),+)?] }),+ } }
+    };
+    (ignore, $helper:expr => { $($case_name:ident: { ($($case_args:expr),+) $(, [$($attr:meta),+])? }),+ }) => {
+        $crate::test_gen! { $helper => { $($case_name: { ($($case_args),+), [ignore $(, $($attr),+)?] }),+ } }
     };
     ($helper:expr, <_, _> => { $($case_name:ident: { ($($case_args:expr),+) $(, [$($attr:meta),+])? }),+ }) => {
         $crate::test_gen! { $helper, <(), ()> => { $($case_name: { ($($case_args),+) $(, [$($attr),+])? }),+ } }
