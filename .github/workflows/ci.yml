@@ -34,6 +34,11 @@ jobs:
       run: cargo fmt --check --verbose
     - name: Validate Clippy
       run: cargo clippy -- -D warnings --verbose
-    - name: Validate Tests
+    - name: Validate Standard Tests
       run: cargo test --verbose
+    # As this file is running tests on a library for generating tests,
+    # it's required that it run tests on both standard tests,
+    # and ignored cases, as generating such tests, is included in it's expected bahaviour...
+    - name: Validate Ignored Tests
+      run: cargo test --verbose -- --ignored
 
