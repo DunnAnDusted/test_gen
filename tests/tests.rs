@@ -82,131 +82,27 @@ mod unit_return {
 mod return_term {
     use super::*;
 
-    fn iec<T: Into<ExitCode>, E>(into: T) -> Result<ExitCode, E> {
-        Ok(into.into())
-    }
-
-    mod unit_unit {
+    mod unit_result {
         use super::*;
+
+        type UResult = Result<(), ()>;
 
         mod unique_attrs {
             use super::*;
 
             test_gen! {
-                a_ok, <_, _> => {
-                    no_attr_one: { (()) },
-                    no_attr_two: { (()) },
+                a_ok,
+                UResult => {
+                    no_attrs_one: { (()) },
+                    no_attrs_two: { (()) },
                     ignore_one: { (()), [ignore] },
                     ignore_two: { (()), [ignore] }
                 }
             }
         }
-
-        mod all_ignore {
-            use super::*;
-
-            test_gen! {
-                ignore,
-                a_ok,
-                <_, _> => {
-                    one: { (()) },
-                    two: { (()) }
-                }
-            }
-        }
     }
 
-    mod ec_unit {
-        use super::*;
-
-        mod unique_attrs {
-            use super::*;
-
-            test_gen! {
-                iec, <ExitCode, _> => {
-                    no_attr_one: { (0) },
-                    no_attr_two: { (0) },
-                    ignore_one: { (0), [ignore] },
-                    ignore_two: { (0), [ignore] }
-                }
-            }
-        }
-
-        mod all_ignore {
-            use super::*;
-
-            test_gen! {
-                ignore,
-                iec,
-                <ExitCode, _> => {
-                    one: { (0) },
-                    two: { (0) }
-                }
-            }
-        }
-    }
-
-    mod unit_ec {
-        use super::*;
-
-        mod unique_attrs {
-            use super::*;
-
-            test_gen! {
-                a_ok, <_, ExitCode> => {
-                    no_attrs_one: { (()) },
-                    no_attrs_two: { (()) },
-                    ignore_one: { (()) },
-                    ignore_two: { (()) }
-                }
-            }
-        }
-
-        mod all_ignore {
-            use super::*;
-
-            test_gen! {
-                ignore,
-                a_ok,
-                <_, ExitCode> => {
-                    one: { (()) },
-                    two: { (()) }
-                }
-            }
-        }
-    }
-
-    mod ec_ec {
-        use super::*;
-
-        mod unique_attrs {
-            use super::*;
-
-            test_gen! {
-                iec, <ExitCode, ExitCode> => {
-                    no_attrs_one: { (0) },
-                    no_attrs_two: { (0) },
-                    ignore_one: { (0), [ignore] },
-                    ignore_two: { (0), [ignore] }
-                }
-            }
-        }
-
-        mod all_ignore {
-            use super::*;
-
-            test_gen! {
-                ignore,
-                iec,
-                <ExitCode, ExitCode> => {
-                    one: { (0) },
-                    two: { (0) }
-                }
-            }
-        }
-    }
-
-    mod all_ec {
+    mod into_ec {
         use super::*;
 
         mod unique_attrs {
@@ -237,7 +133,7 @@ mod return_term {
         }
     }
 
-    mod all_unique {
+    mod into_unique {
         use super::*;
 
         mod unique_attrs {

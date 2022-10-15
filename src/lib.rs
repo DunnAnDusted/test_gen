@@ -2,50 +2,6 @@
 
 #[macro_export]
 macro_rules! test_gen {
-    //////////////////
-    // Result Cases //
-    //////////////////
-
-    // Ignore All, Unit-Unit
-    (ignore, $helper:expr, <_, _> => { $($case_name:ident: { ($($case_args:expr),+) $(, [$($attr:meta),+])? }),+ }) => {
-        $crate::test_gen! { ignore, $helper, <(), ()> => { $($case_name: { ($($case_args),+) $(, [$($attr),+])? }),+ } }
-    };
-
-    // Ignore All, Unit-User Defined
-    (ignore, $helper:expr, <_, $err:ty> => { $($case_name:ident: { ($($case_args:expr),+) $(, [$($attr:meta),+])? }),+ }) => {
-        $crate::test_gen! { ignore, $helper, <(), $err> => { $($case_name: { ($($case_args),+) $(, [$($attr),+])? }),+ } }
-    };
-
-    // Ignore All, User Defined-Unit
-    (ignore, $helper:expr, <$ok:ty, _> => { $($case_name:ident: { ($($case_args:expr),+) $(, [$($attr:meta),+])? }),+ }) => {
-        $crate::test_gen! { ignore, $helper, <$ok, ()> => { $($case_name: { ($($case_args),+) $(, [$($attr),+])? }),+ } }
-    };
-
-    // Ignore All, User Defined-User Defined
-    (ignore, $helper:expr, <$ok:ty, $err:ty> => { $($case_name:ident: { ($($case_args:expr),+) $(, [$($attr:meta),+])? }),+ }) => {
-        $crate::test_gen! { ignore, $helper, Result<$ok, $err> => { $($case_name: { ($($case_args),+) $(, [$($attr),+])? }),+ } }
-    };
-
-    // Unit-Unit
-    ($helper:expr, <_, _> => { $($case_name:ident: { ($($case_args:expr),+) $(, [$($attr:meta),+])? }),+ }) => {
-        $crate::test_gen! { $helper, <(), ()> => { $($case_name: { ($($case_args),+) $(, [$($attr),+])? }),+ } }
-    };
-
-    // Unit-User Defined
-    ($helper:expr, <_, $err:ty> => { $($case_name:ident: { ($($case_args:expr),+) $(, [$($attr:meta),+])? }),+ }) => {
-        $crate::test_gen! { $helper, <(), $err> => { $($case_name: { ($($case_args),+) $(, [$($attr),+])? }),+ } }
-    };
-
-    // User Define-Unit
-    ($helper:expr, <$ok:ty, _> => { $($case_name:ident: { ($($case_args:expr),+) $(, [$($attr:meta),+])? }),+ }) => {
-        $crate::test_gen! { $helper, <$ok, ()> => { $($case_name: { ($($case_args),+) $(, [$($attr),+])? }),+ } }
-    };
-
-    // User Defined-User Defined
-    ($helper:expr, <$ok:ty, $err:ty> => { $($case_name:ident: { ($($case_args:expr),+) $(, [$($attr:meta),+])? }),+ }) => {
-        $crate::test_gen! { $helper, Result<$ok, $err> => { $($case_name: { ($($case_args),+) $(, [$($attr),+])? }),+ } }
-    };
-
     ////////////////////
     // No/Unit Return //
     ////////////////////
