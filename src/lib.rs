@@ -113,12 +113,8 @@ macro_rules! test_gen {
 // Basic tests, to confirm the macro can generate `#![no_std]` compatible code.
 #[cfg(test)]
 mod no_std_tests {
-    fn passthrough<T>(pass: T) -> T {
-        pass
-    }
-
     test_gen! {
-        passthrough => {
+        Into::into => {
             unit: { (), (()) },
             result: { Result<(), ()>, (Ok(())) }
         }
