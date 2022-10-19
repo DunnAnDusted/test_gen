@@ -13,7 +13,7 @@
 /// and its arguments.
 ///
 /// Example of basic usage:
-/// ```
+/// ``` ignore
 #[doc = include_str!("../tests/doctest_example_square.rs")]
 /// ```
 ///
@@ -22,12 +22,12 @@
 /// case-by-case basis.
 ///
 /// Examples of arbitrarty return type usage:
-/// ```
+/// ``` ignore
 #[doc = include_str!("../tests/doctest_example_termination.rs")]
 /// ```
 ///
 /// Examples of attribute usage:
-/// ```
+/// ``` ignore
 #[doc = include_str!("../tests/doctest_example_attributes.rs")]
 /// ```
 /// (Note: The syntax of these examples can be mixed as nessacary, with attributes being applicable
