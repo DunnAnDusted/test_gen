@@ -91,6 +91,10 @@ macro_rules! test_gen {
     };
 }
 
+#[doc = include_str!("../README.md")]
+#[cfg(doctest)]
+struct ReadMeDocTestDummy;
+
 // Basic tests, to confirm the macro can generate `#![no_std]` compatible code.
 #[cfg(test)]
 mod no_std_tests {
