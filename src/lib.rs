@@ -33,7 +33,7 @@
 #![no_std]
 #![warn(missing_docs)]
 
-/// Generates unique, named test cases, based on parametrised inputs.
+/// Generates unique, named test cases, based on parameterized inputs.
 ///
 /// `test_gen` is designed for generating test functions in bulk, at compile time.
 /// Consequently, its syntax is designed to imitating the syntax of a function definition.
