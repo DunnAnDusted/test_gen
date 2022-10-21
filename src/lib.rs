@@ -66,7 +66,7 @@
 /// to cases with arbitrary return types, with the exception of `should_panic`, as this attribute
 /// isn't supported by Rust's testing harness for these cases.)
 ///
-/// [`Termination`]: std::process:Termination
+/// [`Termination`]: https://doc.rust-lang.org/std/process/trait.Termination.html
 #[macro_export]
 macro_rules! test_gen {
     ////////////////////
