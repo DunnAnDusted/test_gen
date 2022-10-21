@@ -1,3 +1,35 @@
+//! A comprehensive declarative macro, for concisely defining parameterized tests.
+//!
+//! When writing automated tests, we're always aiming for two key criteria:
+//!
+//! 1. Comprehensive code coverage
+//! 2. Ease of identification
+//!
+//! Out of the box, the design of Rust's test harness can make this something of a pain though...
+//!
+//! Ease of identification encorages writing separate test functions for every test case, so the
+//! harness registers them against separate names. Unfortunately, this results in the need
+//! for a significant deal of boilerplate, to achieved comprehensive code coverage.
+//!
+//! By constast, comprehensive code coverage can be achieved easily and concisely,
+//! via the use of iteration, but sacrifices clarity and ease of debugging, by testing many values,
+//! with the same named case.
+//!
+//! `test_gen` is designed to address these goals, by allowing named test cases to be specified in
+//! batches with similar behaviour and attributes, but distinct arguments, minimising boilerplate.
+//!
+//! # Examples
+//!
+//! Fruits:
+//! ``` no_run
+#![doc = include_str!("../tests/doctest_example_fruits.rs")]
+//! ```
+//!
+//! # License
+//!
+//! `test_gen` is licensed under the [BSD 3-Clause].
+//!
+//! [BSD 3-Clause]: https://github.com/DunnAnDusted/test_gen/blob/main/LICENSE
 #![no_std]
 #![warn(missing_docs)]
 
