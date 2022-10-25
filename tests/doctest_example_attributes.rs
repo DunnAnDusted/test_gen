@@ -4,8 +4,8 @@ fn bool_panic(switch: bool) {
 
 // Examples of case-by-case attribute syntax
 mod case_by_case {
-    use test_gen::test_gen;
     use super::*;
+    use test_gen::test_gen;
 
     test_gen! {
         bool_panic => {
@@ -19,8 +19,8 @@ mod case_by_case {
 
 // Examples of block-wide syntax
 mod block_wide {
-    use test_gen::test_gen;
     use super::*;
+    use test_gen::test_gen;
 
     test_gen! {
         [ignore, should_panic],

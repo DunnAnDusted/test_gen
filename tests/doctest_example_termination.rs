@@ -1,7 +1,7 @@
 // Example of case-by-case arbitrary result syntax
 mod case_by_case {
-    use test_gen::test_gen;
     use std::process::ExitCode;
+    use test_gen::test_gen;
 
     fn call<T, U, F: Fn(T) -> U>(f: F, t: T) -> U {
         f(t)

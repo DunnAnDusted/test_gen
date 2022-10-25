@@ -31,7 +31,7 @@ impl NameOf for BrambleFruit {
         use BrambleFruit::*;
 
         match self {
-            BlackBerry => "blackberry"
+            BlackBerry => "blackberry",
         }
     }
 }

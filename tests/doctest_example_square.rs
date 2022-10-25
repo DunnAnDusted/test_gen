@@ -10,4 +10,3 @@ test_gen! {
         four_squared: { (4, 16) }
     }
 }
-
