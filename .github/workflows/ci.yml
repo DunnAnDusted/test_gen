@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        toolchains:
+        toolchain:
           - stable
           - beta
           - nightly
@@ -30,7 +30,7 @@ jobs:
     #
     # Additionally, the library is designed on the stable branch, meaning the check should run on a stable version.
     - name: Validate Formatting
-      if: matrix.toolchains == 'stable'
+      if: matrix.toolchain == 'stable'
       run: cargo fmt --check --verbose
     - name: Validate Clippy
       run: cargo clippy -- -D warnings --verbose
