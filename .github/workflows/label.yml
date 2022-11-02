@@ -15,14 +15,14 @@ jobs:
     strategy:
       matrix:
         label:
-          - { title: "Adds Tests", actual: "adds tests" }'
-          - { title: "Modifies Tests", actual: "modifies tests" }
+          - adds tests
+          - modifies tests
     steps:
-      - name: ${{ matrix.label.title }}
-        if: startsWith(github.event.pull_request.title, format("[{0}]", matrix.label.actual))
+      - name: ${{ matrix.label }}
+        if: startsWith(github.event.pull_request.title, format("[{0}]", matrix.label))
         uses: andymckay/labeler@1.0.4
         with:
-          add-labels: ${{ matrix.label.actual }}
+          add-labels: ${{ matrix.label }}
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           ignore-if-labeled: true
       - name: Modifies Tests
