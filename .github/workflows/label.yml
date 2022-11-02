@@ -24,4 +24,3 @@ jobs:
         with:
           labels: ${{ matrix.label }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          ignore-if-labeled: true
