@@ -20,8 +20,8 @@ jobs:
     steps:
       - name: ${{ matrix.label }}
         if: startsWith(github.event.pull_request.title, format('[{0}]', matrix.label))
-        uses: andymckay/labeler@1.0.4
+        uses: actions-ecosystem/action-add-labels@1.1.0
         with:
-          add-labels: ${{ matrix.label }}
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          labels: ${{ matrix.label }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           ignore-if-labeled: true
