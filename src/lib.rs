@@ -15,8 +15,10 @@
 //! via the use of iteration, but sacrifices clarity and ease of debugging, by testing many values,
 //! with the same named case.
 //!
-//! `test_gen` is designed to address these goals, by allowing named test cases to be specified in
-//! batches with similar behaviour and attributes, but distinct arguments, minimising boilerplate.
+//! `test_gen` is designed to address these goals, by enabling
+//! the concise definition of batches of named tests,
+//! using a parameterized argument format to minimise the boilerplate
+//! otherwise required for specifying batches of similar tests.
 //!
 //! # Examples
 //!
