@@ -22,7 +22,11 @@ mod block_wide {
     use test_gen::test_gen;
 
     fn clamp_result(a: u32) -> Result<(), ()> {
-        (1..101).contains(&a).then_some(()).ok_or(())
+        if (1..101).contains(&a) {
+            Ok(())
+        } else {
+            Err(())
+        }
     }
 
     test_gen! {
