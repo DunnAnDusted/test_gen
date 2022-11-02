@@ -11,7 +11,7 @@ Documentation can be found at [Docs.rs].
 [Docs.rs]: https://docs.rs/test_gen/latest/test_gen
 
 ## Usage
-**Minimum Supported Version:** 1.61.0
+**Minimum Supported Rust Version:** 1.61.0
 
 `test_gen` can be included, by adding this to your `Cargo.toml`:
 
