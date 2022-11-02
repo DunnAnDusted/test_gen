@@ -11,7 +11,7 @@ jobs:
   label-pull:
     runs-on: ubuntu-latest
     permissions:
-      issues: write
+      pull-requests: write
     strategy:
       matrix:
         label:
