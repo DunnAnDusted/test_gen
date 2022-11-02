@@ -1,0 +1,28 @@
+name: Label PR
+
+on:
+  pull_request:
+    branches: "main"
+    types:
+      - opened
+  workflow_call:
+
+jobs:
+  label-pull:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    strategy:
+      matrix:
+        label:
+          - { title: "Adds Tests", actual: "adds tests" }'
+          - { title: "Modifies Tests", actual: "modifies tests" }
+    steps:
+      - name: ${{ matrix.label.title }}
+        if: startsWith(github.event.pull_request.title, format("[{0}]", matrix.label.actual))
+        uses: andymckay/labeler@1.0.4
+        with:
+          add-labels: ${{ matrix.label.actual }}
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          ignore-if-labeled: true
+      - name: Modifies Tests
