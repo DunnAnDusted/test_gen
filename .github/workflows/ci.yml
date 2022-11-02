@@ -23,7 +23,7 @@ jobs:
           - 1.61.0 # MSRV
     steps:
     - uses: actions/checkout@v3
-    - run: rustup update ${{ matrix.toolchain }} && rustup default ${{ matrix.toolchain }}
+    - run: rustup update ${{ matrix.toolchain }} && rustup default ${{ matrix.toolchain }} && rustup component add clippy --toolchain ${{matrix.toolchain}}
     # Validating the formatting of the project shouldn't do very much currently,
     # due to the `rustfmt`'s macro formatting options being nightly exlusive,
     # but hopefully shouldn't add any significant overhead in jobs, and require minimal maintainance in future...
