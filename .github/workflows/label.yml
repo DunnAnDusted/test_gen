@@ -25,4 +25,3 @@ jobs:
           add-labels: ${{ matrix.label }}
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           ignore-if-labeled: true
-      - name: Modifies Tests
