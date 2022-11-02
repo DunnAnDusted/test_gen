@@ -1,0 +1,26 @@
+name: Label PR
+
+on:
+  pull_request:
+    branches: "main"
+    types:
+      - opened
+  workflow_call:
+
+jobs:
+  label-pull:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    strategy:
+      matrix:
+        label:
+          - adds tests
+          - modifies tests
+    steps:
+      - name: ${{ matrix.label }}
+        if: startsWith(github.event.pull_request.title, format('[{0}]', matrix.label))
+        uses: actions-ecosystem/action-add-labels@v1.1.0
+        with:
+          labels: ${{ matrix.label }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}

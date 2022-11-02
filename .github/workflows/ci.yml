@@ -6,12 +6,16 @@ on:
     paths:
       - "**.rs"
       - "**.toml"
+    types:
+      - opened
+      - synchronize
+      - reopened
   workflow_call:
 
 env:
   CARGO_TERM_COLOR: always
 
-jobs:
+jobs:    
   validate-pull:
     runs-on: ubuntu-latest
     strategy:
