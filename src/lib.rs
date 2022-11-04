@@ -1,24 +1,27 @@
 //! A comprehensive declarative macro, for concisely defining parameterized tests.
 //!
-//! When writing automated tests, we're always aiming for two key criteria:
+//! When writing automated tests, it's generally done with two key goals:
 //!
 //! 1. Comprehensive code coverage
-//! 2. Ease of identification
+//! 2. Debuggability
 //!
-//! Out of the box, the design of Rust's test harness can make this something of a pain though...
+//! Out of the box, the design of Rusts standard testing framework,
+//! can make comfortably achieving both, a challenge...
 //!
-//! Ease of identification encorages writing separate test functions for every test case, so the
-//! harness registers them against separate names. Unfortunately, this results in the need
-//! for a significant deal of boilerplate, to achieved comprehensive code coverage.
+//! For most effective debuggability, the design of Rusts testing framework
+//! encorages writing separate test functions for every case,
+//! as these are each tracked separately against the name of the test function.
+//! Unfortunately, this results in the need for a significant deal of boilerplate,
+//! to achieved comprehensive code coverage.
 //!
 //! By constast, comprehensive code coverage can be achieved easily and concisely,
-//! via the use of iteration, but sacrifices clarity and ease of debugging, by testing many values,
-//! with the same named case.
+//! via the use of iteration, but sacrifices clarity and debuggability,
+//! by using the same named case, to test potentially many values.
 //!
-//! `test_gen` is designed to address these goals, by enabling
+//! `test_gen` is designed to address both goals, by enabling
 //! the concise definition of batches of named tests,
 //! using a parameterized argument format to minimise the boilerplate
-//! otherwise required for specifying batches of similar tests.
+//! otherwise required for specifying batches of tests.
 //!
 //! # Examples
 //!
