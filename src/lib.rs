@@ -32,9 +32,11 @@
 //!
 //! # License
 //!
-//! `test_gen` is licensed under the [BSD 3-Clause].
+//! `test_gen` is licensed under the BSD 3-Clause license.
 //!
-//! [BSD 3-Clause]: https://github.com/DunnAnDusted/test_gen/blob/main/LICENSE
+//! See [LICENSE] for details.
+//!
+//! [LICENSE]: https://github.com/DunnAnDusted/test_gen/blob/main/LICENSE
 #![no_std]
 #![warn(missing_docs)]
 
