@@ -21,7 +21,10 @@ env:
 
 jobs:
   validate-release:
-    if: ${{ !contains(inputs.args, '--token') && github.ref_name == 'main' }}
+    # Restricts the workflow to running, only if:
+    # 1. It isn't potentially expose a token, and is against the main branch
+    # 2. It's triggered by a release
+    if: ${{ !contains(inputs.args, '--token') && github.ref_name == 'main' || github.event_name == 'release' }}
     uses: ./.github/workflows/ci.yml
   publish-release:
     needs: validate-release
