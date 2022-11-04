@@ -1,24 +1,27 @@
 //! A comprehensive declarative macro, for concisely defining parameterized tests.
 //!
-//! When writing automated tests, we're always aiming for two key criteria:
+//! When writing automated tests, it's generally done with two key goals:
 //!
 //! 1. Comprehensive code coverage
-//! 2. Ease of identification
+//! 2. Debuggability
 //!
-//! Out of the box, the design of Rust's test harness can make this something of a pain though...
+//! Out of the box, the design of Rusts standard testing framework,
+//! can make comfortably achieving both, a challenge...
 //!
-//! Ease of identification encorages writing separate test functions for every test case, so the
-//! harness registers them against separate names. Unfortunately, this results in the need
-//! for a significant deal of boilerplate, to achieved comprehensive code coverage.
+//! For most effective debuggability, the design of Rusts testing framework
+//! encorages writing separate test functions for every case,
+//! as these are each tracked separately against the name of the test function.
+//! Unfortunately, this results in the need for a significant deal of boilerplate,
+//! to achieved comprehensive code coverage.
 //!
 //! By constast, comprehensive code coverage can be achieved easily and concisely,
-//! via the use of iteration, but sacrifices clarity and ease of debugging, by testing many values,
-//! with the same named case.
+//! via the use of iteration, but sacrifices clarity and debuggability,
+//! by using the same named case, to test potentially many values.
 //!
-//! `test_gen` is designed to address these goals, by enabling
+//! `test_gen` is designed to address both goals, by enabling
 //! the concise definition of batches of named tests,
 //! using a parameterized argument format to minimise the boilerplate
-//! otherwise required for specifying batches of similar tests.
+//! otherwise required for specifying batches of tests.
 //!
 //! # Examples
 //!
@@ -27,25 +30,13 @@
 #![doc = include_str!("../tests/doctest_example_fruits.rs")]
 //! ```
 //!
-//! # One More Thing
-//!
-//! This documentation has been written to be concise, where possible.
-//!
-//! In the case it is inadequate in effectively communicating the use of the crate,
-//! providing comprehensive examples of its usage, or does not align with the behaviour of crate
-//! items, the project can be found on [GitHub], where suggestions as to how the structure
-//! and wording of the documentation can be improved, and reports of faulty behaviour
-//! are being sought, and exhaustive unit tests of every macro form can be found.
-//!
-//! Further information on these topics can be found on the repository page itself.
-//!
-//! [GitHub]: https://github.com/DunnAnDusted/test_gen
-//!
 //! # License
 //!
-//! `test_gen` is licensed under the [BSD 3-Clause].
+//! `test_gen` is licensed under the BSD 3-Clause license.
 //!
-//! [BSD 3-Clause]: https://github.com/DunnAnDusted/test_gen/blob/main/LICENSE
+//! See [LICENSE] for details.
+//!
+//! [LICENSE]: https://github.com/DunnAnDusted/test_gen/blob/main/LICENSE
 #![no_std]
 #![warn(missing_docs)]
 
