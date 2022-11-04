@@ -30,20 +30,6 @@
 #![doc = include_str!("../tests/doctest_example_fruits.rs")]
 //! ```
 //!
-//! # One More Thing
-//!
-//! This documentation has been written to be concise, where possible.
-//!
-//! In the case it is inadequate in effectively communicating the use of the crate,
-//! providing comprehensive examples of its usage, or does not align with the behaviour of crate
-//! items, the project can be found on [GitHub], where suggestions as to how the structure
-//! and wording of the documentation can be improved, and reports of faulty behaviour
-//! are being sought, and exhaustive unit tests of every macro form can be found.
-//!
-//! Further information on these topics can be found on the repository page itself.
-//!
-//! [GitHub]: https://github.com/DunnAnDusted/test_gen
-//!
 //! # License
 //!
 //! `test_gen` is licensed under the [BSD 3-Clause].
