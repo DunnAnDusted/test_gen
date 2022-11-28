@@ -1,173 +1,176 @@
-use std::process::ExitCode;
-use test_gen::test_gen;
+use std::process::{ExitCode, Termination};
+use test_gen::*;
 
-mod unit_return {
+mod unique_attrs {
     use super::*;
 
-    mod unique_attrs {
-        use super::*;
-
-        test_gen! {
-            bool_panic => {
-                one_no_attrs: { (true) },
-                two_no_attrs: { (true) },
-                three_should_panic: { [should_panic], (false) },
-                four_should_panic: { [should_panic], (false) },
-                five_ignore: { [ignore], (true) },
-                six_ignore: { [ignore], (true) },
-                seven_should_panic_ignore: { [should_panic, ignore], (false) },
-                eight_should_panic_ignore: { [ignore, should_panic], (false) }
-            }
-        }
-    }
-
-    mod all_panic {
-        use super::*;
-
-        test_gen! {
-            [should_panic],
-            bool_panic => {
-                one: { (false) },
-                two: { (false) },
-                three_ignore: { [ignore], (false) },
-                four_ignore: { [ignore], (false) }
-            }
-        }
-    }
-
-    mod all_ignore {
-        use super::*;
-
-        test_gen! {
-            [ignore],
-            bool_panic => {
-                one: { (true) },
-                two: { (true) },
-                three_should_panic: { [should_panic], (false) },
-                four_should_panic: { [should_panic], (false) }
-            }
-        }
-    }
-
-    mod all_ignore_should_panic {
-        use super::*;
-
-        test_gen! {
-            [ignore, should_panic],
-            bool_panic => {
-                one: { (false) },
-                two: { (false) }
-            }
-        }
-    }
-
-    mod all_should_panic_ignore {
-        use super::*;
-
-        test_gen! {
-            [should_panic, ignore],
-            bool_panic => {
-                one: { (false) },
-                two: { (false) }
-            }
+    test_gen! {
+        fn bool_panic => {
+            one_no_attrs: {
+                (true)
+            },
+            two_should_panic: {
+                #[should_panic]
+                (false)
+            },
+            three_ignore: {
+                #[ignore]
+                (true)
+            },
+            four_should_panic_ignore: {
+                #[should_panic]
+                #[ignore]
+                (false)
+            },
         }
     }
 }
 
-mod return_term {
+mod all_ignore {
     use super::*;
 
-    mod unit_result {
-        use super::*;
-
-        type UResult = Result<(), ()>;
-
-        mod unique_attrs {
-            use super::*;
-
-            test_gen! {
-                a_ok => UResult => {
-                    one_no_attrs: { (()) },
-                    two_no_attrs: { (()) },
-                    three_ignore: { [ignore], (()) },
-                    four_ignore: { [ignore], (()) }
-                }
-            }
-        }
-
-        mod all_ignore {
-            use super::*;
-
-            test_gen! {
-                a_ok => UResult => {
-                    one: { (()) },
-                    two: { (()) }
-                }
-            }
-        }
-    }
-
-    mod into_ec {
-        use super::*;
-
-        mod unique_attrs {
-            use super::*;
-
-            test_gen! {
-                Into::into => ExitCode => {
-                    one_no_attrs: { (0) },
-                    two_no_attrs: { (0) },
-                    three_ignore: { [ignore], (0) },
-                    four_ignore: { [ignore], (0)}
-                }
-            }
-        }
-
-        mod all_ignore {
-            use super::*;
-
-            test_gen! {
-                [ignore],
-                Into::into => ExitCode => {
-                    one: { (0) },
-                    two: { (0) }
-                }
-            }
-        }
-    }
-
-    mod into_unique {
-        use super::*;
-
-        mod unique_attrs {
-            use super::*;
-
-            test_gen! {
-                Into::into => {
-                    into_ec: { (0) => ExitCode },
-                    into_unit: { (()) },
-                    into_ec_ignore: { [ignore], (0) => ExitCode },
-                    into_unit_ignore: { [ignore], (()) }
-                }
-            }
-        }
-
-        mod all_ignore {
-            use super::*;
-
-            test_gen! {
-                [ignore],
-                Into::into => {
-                    into_ec: { (0) => ExitCode },
-                    into_unit: { (()) }
-                }
-            }
+    test_gen! {
+        #[ignore]
+        fn bool_panic => {
+            one_no_attrs: {
+                (true)
+            },
+            two_should_panic: {
+                #[should_panic]
+                (false)
+            },
         }
     }
 }
 
-fn a_ok<T, E>(pass: T) -> Result<T, E> {
-    Ok(pass)
+mod all_should_panic {
+    use super::*;
+
+    test_gen! {
+        #[should_panic]
+        fn bool_panic => {
+            one_no_attrs: {
+                (false)
+            },
+            two_ignore: {
+                #[ignore]
+                (false)
+            },
+        }
+    }
+}
+
+mod unique_return {
+    use super::*;
+
+    struct Test;
+
+    impl From<Test> for () {
+        fn from(_: Test) -> Self {
+            ()
+        }
+    }
+
+    test_gen! {
+        fn From::from => {
+            one_exit_code: {
+                (0) -> ExitCode
+            },
+            two_unit: {
+                (Test)
+            },
+        }
+    }
+}
+
+mod static_return {
+    use super::*;
+
+    test_gen! {
+        fn Termination::report -> ExitCode => {
+            one_exit_code: {
+                (ExitCode::SUCCESS)
+            },
+            two_result: {
+                (Result::<_, ()>::Ok(()))
+            },
+        }
+    }
+}
+
+mod override_return {
+    use super::*;
+    use std::{
+        convert::{Infallible, TryFrom, TryInto},
+        num::TryFromIntError,
+    };
+
+    struct Test(u8);
+
+    impl TryFrom<usize> for Test {
+        type Error = TryFromIntError;
+
+        fn try_from(value: usize) -> Result<Self, Self::Error> {
+            value.try_into().map(Self)
+        }
+    }
+
+    impl Termination for Test {
+        fn report(self) -> ExitCode {
+            self.0.into()
+        }
+    }
+
+    impl From<Test> for ExitCode {
+        fn from(value: Test) -> Self {
+            Self::from(value.0)
+        }
+    }
+
+    test_gen! {
+        fn TryFrom::try_from -> Result<ExitCode, Infallible> => {
+            one_result_test: {
+                (Test(0))
+            },
+            two_result_exit_code: {
+                (0)
+            },
+            three_result_test: {
+                (0) -> Result<Test, TryFromIntError>
+            },
+        }
+    }
+}
+
+mod static_args {
+    use super::*;
+    use std::fmt::Debug;
+
+    fn assert_result<T, U, V: Debug + PartialEq, F: FnOnce(T, U) -> V>(f: F, s: T, a: U, b: V) {
+        assert_eq!(f(s, a), b);
+    }
+
+    test_gen! {
+        fn assert_result (usize::pow, 2) => {
+            one_two_squared: {
+                (2, 4)
+            },
+            two_four_squared: {
+                (4, 16)
+            },
+        }
+    }
+
+    test_gen! {
+        fn assert_result (usize::abs_diff, 50) => {
+            three_ad_60: {
+                (60, 10)
+            },
+            four_ad_40: {
+                (40, 10)
+            },
+        }
+    }
 }
 
 fn bool_panic(switch: bool) {

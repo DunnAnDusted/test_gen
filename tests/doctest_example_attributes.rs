@@ -8,11 +8,23 @@ mod case_by_case {
     use test_gen::test_gen;
 
     test_gen! {
-        bool_panic => {
-            no_attrs: { (true) },
-            ignore: { [ignore], (true) },
-            should_panic: { [should_panic], (false) },
-            ignore_should_panic: { [ignore, should_panic], (false) }
+        fn bool_panic => {
+            no_attrs: {
+                (true)
+            },
+            ignore: {
+                #[ignore]
+                (true)
+            },
+            should_panic: {
+                #[should_panic]
+                (false)
+            },
+            ignore_should_panic: {
+                #[ignore]
+                #[should_panic]
+                (false)
+            },
         }
     }
 }
@@ -23,9 +35,12 @@ mod block_wide {
     use test_gen::test_gen;
 
     test_gen! {
-        [ignore, should_panic],
-        bool_panic => {
-            no_attrs: { (false) }
+        #[ignore]
+        #[should_panic]
+        fn bool_panic => {
+            no_attrs: {
+                (false)
+            },
         }
     }
 }
