@@ -1,17 +1,23 @@
 [package]
 name = "test_gen"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
-description = "A comprehensive declarative macro, for concisely defining parameterised tests."
+description = "A comprehensive function-like macro, for concisely defining parameterized tests."
 authors = ["Andy <andrew.dunn@ajja.org.uk>"]
 license = "BSD-3-Clause"
-documentation = "https://docs.rs/crate/test_gen"
+documentation = "https://docs.rs/test_gen/latest/test_gen"
 repository = "https://github.com/DunnAnDusted/test_gen"
 readme = "README.md"
 keywords = ["test", "parameterized", "parametrized", "code-gen", "macro"]
-categories = ["development-tools", "development-tools::testing", "no-std"]
+categories = ["development-tools", "development-tools::testing"]
 
 [package.metadata]
 msrv = "1.61.0"
 
 [dependencies]
+proc-macro2 = "1.0.47"
+quote = "1.0.21"
+syn = {version = "1.0.103", features = ["full"]}
+
+[lib]
+proc-macro = true
