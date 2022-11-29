@@ -15,9 +15,9 @@ categories = ["development-tools", "development-tools::testing"]
 msrv = "1.61.0"
 
 [dependencies]
-proc-macro2 = "1.0.47"
-quote = "1.0.21"
-syn = {version = "1.0.103", features = ["full"]}
+proc-macro2 = "1.0.*"
+quote = "1.0.*"
+syn = {version = "1.0.*", features = ["full"]}
 
 [lib]
 proc-macro = true
