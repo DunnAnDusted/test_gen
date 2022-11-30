@@ -3,16 +3,22 @@ mod case_by_case {
     use std::process::ExitCode;
     use test_gen::test_gen;
 
-    fn call<T, U, F: Fn(T) -> U>(f: F, t: T) -> U {
-        f(t)
+    struct Example;
+
+    impl From<Example> for () {
+        fn from(_: Example) -> Self {
+            ()
+        }
     }
 
     test_gen! {
-        call => {
-            into_exit_code: { (Into::into, 0) => ExitCode },
-            // `test_gen` supports language features as normal,
-            // including generic parameters and return values.
-            passthrough_unit: { (|switch| assert!(switch), true) }
+        fn Into::into => {
+            into_exit_code: {
+                (0) -> ExitCode
+            },
+            into_unit: {
+                (Example)
+            },
         }
     }
 }
@@ -30,9 +36,13 @@ mod block_wide {
     }
 
     test_gen! {
-        clamp_result => Result<(), ()> => {
-            one: { (1) },
-            one_hundred: { (100) }
+        fn clamp_result -> Result<(), ()> => {
+            one: {
+                (1)
+            },
+            one_hundred: {
+                (100)
+            },
         }
     }
 }

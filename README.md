@@ -70,12 +70,22 @@ fn assert_fruit<T: NameOf>(fruit: Fruit<T>, name: &str) {
 test_gen! {
     // Normal turbofish syntax can be used,
     // when concrete type specification is required
-    assert_fruit::<BrambleFruit> => {
-        apple: { (Fruit::Apple, "apple") },
+    fn assert_fruit::<BrambleFruit> => {
+        apple: {
+            (Fruit::Apple, "apple")
+        },
         // Applying case specific attributes
-        pear: { [ignore], (Fruit::Pear, "pear") },
-        isnt_pear: { [should_panic], (Fruit::Pear, "apple") },
-        blackberry: { (Fruit::Other(BrambleFruit::BlackBerry), "blackberry") }
+        pear: {
+            #[ignore]
+            (Fruit::Pear, "pear")
+        },
+        isnt_pear: {
+            #[should_panic]
+            (Fruit::Pear, "apple")
+        },
+        blackberry: {
+            (Fruit::Other(BrambleFruit::BlackBerry), "blackberry")
+        },
     }
 }
 ```
