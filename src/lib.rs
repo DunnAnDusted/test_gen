@@ -27,7 +27,7 @@
 //!
 //! Fruits:
 //! ``` no_run
-#![doc = include_str!("../tests/doctest_example_fruits.rs")]
+#![doc = doctest_example!("fruits")]
 //! ```
 //!
 //! # License
@@ -50,6 +50,12 @@ use syn::{
     Attribute, Error, Expr, Ident, Path, Token, Type,
 };
 
+macro_rules! doctest_example {
+    ($file:literal) => {
+        include_str!(concat!("../tests/doctest_example_", $file, ".rs"))
+    };
+}
+
 /// Generates unique, named test cases, based on parameterized inputs.
 ///
 /// `test_gen` is designed for generating test functions in bulk, at compile time.
@@ -63,7 +69,7 @@ use syn::{
 ///
 /// Example of basic usage:
 /// ``` no_run
-#[doc = include_str!("../tests/doctest_example_square.rs")]
+#[doc = doctest_example!("square")]
 /// ```
 ///
 /// In addition to this, attributes for tests, and arbitrary return types for supporting use
@@ -72,12 +78,12 @@ use syn::{
 ///
 /// Examples of arbitrarty return type usage:
 /// ``` no_run
-#[doc = include_str!("../tests/doctest_example_termination.rs")]
+#[doc = doctest_example!("termination")]
 /// ```
 ///
 /// Examples of attribute usage:
 /// ``` no_run
-#[doc = include_str!("../tests/doctest_example_attributes.rs")]
+#[doc = doctest_example!("attributes")]
 /// ```
 /// (Note: The syntax of these examples can be mixed as nessacary, with attributes being applicable
 /// to cases with arbitrary return types, with the exception of `should_panic`, as this attribute
