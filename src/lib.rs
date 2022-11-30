@@ -69,7 +69,7 @@ macro_rules! doctest_example {
 ///
 /// Example of basic usage:
 /// ``` no_run
-#[doc = doctest_example!("square")]
+#[doc = doctest_example!("assert_result_blocked")]
 /// ```
 ///
 /// In addition to this, attributes for tests, and arbitrary return types for supporting use
@@ -78,7 +78,7 @@ macro_rules! doctest_example {
 ///
 /// Examples of arbitrarty return type usage:
 /// ``` no_run
-#[doc = doctest_example!("termination")]
+#[doc = doctest_example!("termination_basic")]
 /// ```
 ///
 /// Examples of attribute usage:
