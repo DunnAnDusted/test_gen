@@ -1,4 +1,4 @@
-//! A comprehensive declarative macro, for concisely defining parameterized tests.
+//! A comprehensive function-like macro, for concisely defining parameterized tests.
 //!
 //! When writing automated tests, it's generally done with two key goals:
 //!
@@ -14,7 +14,7 @@
 //! Unfortunately, this results in the need for a significant deal of boilerplate,
 //! to achieved comprehensive code coverage.
 //!
-//! By constast, comprehensive code coverage can be achieved easily and concisely,
+//! By constrast, comprehensive code coverage can be achieved easily and concisely,
 //! via the use of iteration, but sacrifices clarity and debuggability,
 //! by using the same named case, to test potentially many values.
 //!
@@ -27,7 +27,7 @@
 //!
 //! Fruits:
 //! ``` no_run
-#![doc = include_str!("../tests/doctest_example_fruits.rs")]
+#![doc = doctest_example!("fruits")]
 //! ```
 //!
 //! # License
@@ -50,6 +50,12 @@ use syn::{
     Attribute, Error, Expr, Ident, Path, Token, Type,
 };
 
+macro_rules! doctest_example {
+    ($file:literal) => {
+        include_str!(concat!("../tests/doctest_example_", $file, ".rs"))
+    };
+}
+
 /// Generates unique, named test cases, based on parameterized inputs.
 ///
 /// `test_gen` is designed for generating test functions in bulk, at compile time.
@@ -57,33 +63,56 @@ use syn::{
 ///
 /// # Examples
 ///
-/// The base form of `test_gen` always requires a helper function,
-/// followed by one or more test cases, supplied in the form of the case name,
-/// and its arguments.
+/// As basic part of the basic requirements for producing test cases,
+/// the syntax of `test_gen` always features a number of fixed items.
+///
+/// These include:
+///
+/// - A helper function, to drive the behaviour of the test cases
+/// - A list of test cases to generate, which includes:
+///     - The name of the test case
+///     - The arguments which should be passed to the helper function for the case
 ///
 /// Example of basic usage:
 /// ``` no_run
-#[doc = include_str!("../tests/doctest_example_square.rs")]
+#[doc = doctest_example!("assert_result_blocked")]
 /// ```
 ///
-/// In addition to this, attributes for tests, and arbitrary return types for supporting use
-/// with the [`Termination`] trait, are also supported, applied either block-wide, or on a
-/// case-by-case basis.
+/// As noted above, groups of test cases
+/// may be driven by similar helper functions to others,
+/// where behaviour based on its parameters, would be useful.
 ///
-/// Examples of arbitrarty return type usage:
+/// As such, `test_gen` supports block-wide, "static" arguments,
+/// which will be passed to the helper function for every test case.
+///
+/// Example using static arguments:
 /// ``` no_run
-#[doc = include_str!("../tests/doctest_example_termination.rs")]
+#[doc = doctest_example!("assert_result_static")]
 /// ```
+///
+/// These required items, can be supplemented with additional items (e.g. Attributes, arbitrary
+/// return types) to alter how test cases are evaluated, either block-wide, or on a case-by-case basis.
+///
+/// Examples of using basic arbitrarty return types:
+/// ``` no_run
+#[doc = doctest_example!("termination_basic")]
+/// ```
+///
+/// Example of overriding a block-wide arbitrary return type:
+/// ``` no_run
+#[doc = doctest_example!("termination_override")]
+/// ```
+/// Note: Arbirary return types follow the same rules of types which can be returned by the `main`
+/// function of a binary crate, meaning they must implement the [`Termination`] trait.
+///
+/// [`Termination`]: std::process::Termination
 ///
 /// Examples of attribute usage:
 /// ``` no_run
-#[doc = include_str!("../tests/doctest_example_attributes.rs")]
+#[doc = doctest_example!("attributes")]
 /// ```
-/// (Note: The syntax of these examples can be mixed as nessacary, with attributes being applicable
-/// to cases with arbitrary return types, with the exception of `should_panic`, as this attribute
-/// isn't supported by Rust's testing harness for these cases.)
-///
-/// [`Termination`]: https://doc.rust-lang.org/std/process/trait.Termination.html
+/// Note: The syntax of these examples can be mixed as nessacary, with the exception of `should_panic`
+/// in the case of using arbitrary return types, as it isn't supported by Rust's testing framework.
 #[proc_macro]
 pub fn test_gen(tokens: TokenStream) -> TokenStream {
     parse_macro_input!(tokens as TestHelper)
