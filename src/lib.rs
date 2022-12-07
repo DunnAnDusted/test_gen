@@ -50,6 +50,7 @@ use syn::{
     Attribute, Error, Expr, Ident, Path, Token, Type,
 };
 
+/// A shorthand helper macro, for including test files as documentation examples.
 macro_rules! doctest_example {
     ($file:literal) => {
         include_str!(concat!("../tests/doctest_example_", $file, ".rs"))
