@@ -1,7 +1,7 @@
 # test_gen
-A comprehensive declarative macro, for concisely defining parameterized tests.
+A comprehensive function-like macro, for concisely defining parameterized tests.
 
-This crate provides the declarative macro of its namesake, `test_gen`,
+This crate provides the function-like macro of its namesake, `test_gen`,
 which enables the concise definition of batches of named tests,
 implementing a parameterized argument format to minimise the boilerplate
 otherwise required for specifying batches of similar tests.
@@ -11,14 +11,19 @@ Documentation can be found at [Docs.rs].
 [Docs.rs]: https://docs.rs/test_gen/latest/test_gen
 
 ## Usage
-**Minimum Supported Rust Version:** 1.61.0
+**Minimum Supported Rust Version:** 1.63.0
 
-`test_gen` can be included, by adding this to your `Cargo.toml`:
+`test_gen` can be added to a project, using the following command:
+```
+cargo add test_gen --dev
+```
 
+Or alternatively, by adding the following lines to its `Cargo.toml` file:
 ```toml
 [dev-dependancies]
-test_gen = "0.1.0"
+test_gen = "0.2.0"
 ```
+
 ## Examples
 
 Fruits:
