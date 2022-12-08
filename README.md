@@ -14,7 +14,7 @@ Documentation can be found at [Docs.rs].
 **Minimum Supported Rust Version:** 1.63.0
 
 `test_gen` can be added to a project, using the following command:
-```
+```text
 cargo add test_gen --dev
 ```
 
