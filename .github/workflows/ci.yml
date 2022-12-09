@@ -4,6 +4,10 @@ on:
   pull_request:
     branches: "main"
     paths:
+      # `README.md` is included in `src/lib.rs` as a doc comment,
+      # meaning any changes potentially affecting it's code running,
+      # should be validated..
+      - "README.md"
       - "**.rs"
       - "**.toml"
     types:
