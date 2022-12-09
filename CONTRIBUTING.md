@@ -1,6 +1,6 @@
 # Contibuting to `test_gen`
 
-Thanks for your interst in contributing to `test_gen`!
+Thanks for your interest in contributing to `test_gen`!
 
 ## Pulls Requests
 
