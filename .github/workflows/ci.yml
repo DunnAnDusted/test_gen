@@ -31,6 +31,20 @@ jobs:
           - 1.63.0 # MSRV
     steps:
     - uses: actions/checkout@v3
+    - name: Cargo Cache
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.cargo/bin
+          ~/.cargo/registry/index
+          ~/.cargo/registry/cache
+          ~/.cargo/git/db
+          target/
+        key: ${{ runner.os }}-cargo-${{ matrix.toolchain }}-${{ hashFiles('Cargo.toml') }}
+        restore-keys: |
+          ${{ runner.os }}-cargo-${{ matrix.toolchain }}-
+          ${{ runner.os }}-cargo-
+          ${{ runner.os }}-
     - run: rustup update ${{ matrix.toolchain }} && rustup default ${{ matrix.toolchain }} && rustup component add clippy --toolchain ${{matrix.toolchain}}
     # Validating the formatting of the project shouldn't do very much currently,
     # due to the `rustfmt`'s macro formatting options being nightly exlusive,
