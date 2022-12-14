@@ -44,7 +44,7 @@ use quote::ToTokens;
 use syn::{
     braced, parenthesized,
     parse::{Parse, ParseStream, Result},
-    parse_macro_input, parse_quote,
+    parse_quote,
     punctuated::Punctuated,
     token::{Brace, Colon, Comma, FatArrow, Paren, RArrow},
     Attribute, Error, Expr, Ident, Path, Token, Type,
@@ -116,10 +116,18 @@ macro_rules! doctest_example {
 /// in the case of using arbitrary return types, as it isn't supported by Rust's testing framework.
 #[proc_macro]
 pub fn test_gen(tokens: TokenStream) -> TokenStream {
-    parse_macro_input!(tokens as TestHelper)
-        .restructure()
-        // `proc_macro2::TokenStream` needs to be converted back
-        // to `proc_macro::TokenStream` before it can be output
+    // `syn` idioms typically suggest using `parse_macro_input!`
+    // for handling the initial token stream parsing,
+    // but this obfuscates some of the parsing behaviour.
+    //
+    // In this case, using `syn::parse`, and funneling the result
+    // through a subsequent method chain, makes this implementation clearer here.
+    //
+    // NOTE: `Into::into` is required here,
+    // because `proc_macro2::TokenStream` needs to be converted back
+    // to `proc_macro::TokenStream` before it can be returned.
+    syn::parse(tokens)
+        .map_or_else(Error::into_compile_error, TestHelper::restructure)
         .into()
 }
 
