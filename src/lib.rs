@@ -497,17 +497,14 @@ mod tests {
     use super::*;
 
     fn parse_to_tokens<P: Parse + ToTokens>(p: &'static str) {
-        let tokens = p
-            .parse::<TokenStream2>()
-            .expect("string could not be parsed as tokens")
-            .to_string();
+        let tokens: TokenStream2 = p.parse().expect("string could not be parsed as tokens");
 
-        let parsed = syn::parse_str::<P>(&tokens)
+        let parsed = syn::parse_str::<P>(&p)
             .expect("tokens could not be parsed as type")
             .into_token_stream()
             .to_string();
 
-        assert_eq!(parsed, tokens);
+        assert_eq!(parsed, tokens.to_string());
     }
 
     #[test]
