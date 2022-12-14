@@ -257,8 +257,7 @@ impl Parse for TestHelper {
         let cases = cases
             .is_empty()
             .then(|| Error::new(cases.span(), "expected test cases"))
-            .map(Result::Err) // Wrapping the error with a `map` format more cleanly...
-            .unwrap_or_else(|| cases.parse_terminated(TestCase::parse))?;
+            .map_or_else(|| cases.parse_terminated(TestCase::parse), Result::Err)?;
 
         let out = TestHelper {
             static_attrs,
