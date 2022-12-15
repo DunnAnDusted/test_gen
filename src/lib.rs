@@ -46,7 +46,7 @@ use syn::{
     parse::{Parse, ParseStream, Result},
     parse_quote,
     punctuated::Punctuated,
-    token::{Brace, Comma, FatArrow, Paren, RArrow},
+    token::{Brace, FatArrow, Paren, RArrow},
     Attribute, Error, Expr, Ident, Path, Token, Type,
 };
 
@@ -151,7 +151,7 @@ struct TestHelper {
     static_return_type: Option<ReturnType>,
     farrow: FatArrow, // Preserved for span
     braces: Brace,    // Preserved for span
-    cases: Punctuated<TestCase, Comma>,
+    cases: Punctuated<TestCase, Token![,]>,
 }
 
 impl TestHelper {
@@ -434,7 +434,7 @@ impl ToTokens for CaseArgs {
 #[derive(Clone)]
 struct FnArgs {
     parens: Paren, // Preserved for span
-    args: Punctuated<Expr, Comma>,
+    args: Punctuated<Expr, Token![,]>,
 }
 
 impl Parse for FnArgs {
