@@ -240,7 +240,7 @@ impl Parse for TestHelper {
             .parse()
             .map_err(|err| Error::new(err.span(), "expected helper function"))?;
         let static_args = input.peek(Paren).then(|| input.parse()).transpose()?;
-        let static_return_type = ReturnType::try_parse(input).transpose()?;
+        let static_return_type = input.call(ReturnType::try_parse)?;
         let farrow = input.parse::<Token![=>]>()?;
         let cases;
         let braces = braced!(cases in input);
@@ -405,7 +405,7 @@ impl Parse for CaseArgs {
         }
 
         let args = inner.parse()?;
-        let return_type = ReturnType::try_parse(&inner).transpose()?;
+        let return_type = inner.call(ReturnType::try_parse)?;
 
         let out = CaseArgs {
             braces,
@@ -469,8 +469,8 @@ impl ReturnType {
     /// Conditionally parses the type, if a right-arrow is peeked from the stream.
     ///
     /// Included, due to the optional nature of return types in this macro.
-    fn try_parse(input: ParseStream) -> Option<Result<Self>> {
-        input.peek(Token![->]).then(|| input.parse())
+    fn try_parse(input: ParseStream) -> Result<Option<Self>> {
+        input.peek(Token![->]).then(|| input.parse()).transpose()
     }
 }
 
