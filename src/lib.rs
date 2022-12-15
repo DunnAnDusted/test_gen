@@ -46,7 +46,7 @@ use syn::{
     parse::{Parse, ParseStream, Result},
     parse_quote,
     punctuated::Punctuated,
-    token::{Brace, FatArrow, Paren, RArrow},
+    token::{Brace, Paren, RArrow},
     Attribute, Error, Expr, Ident, Path, Token, Type,
 };
 
@@ -149,7 +149,7 @@ struct TestHelper {
     helper: Path,
     static_args: Option<FnArgs>,
     static_return_type: Option<ReturnType>,
-    farrow: FatArrow, // Preserved for span
+    farrow: Token![=>], // Preserved for span
     braces: Brace,    // Preserved for span
     cases: Punctuated<TestCase, Token![,]>,
 }
