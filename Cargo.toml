@@ -1,6 +1,6 @@
 [package]
 name = "test_gen"
-version = "0.2.0"
+version = "0.2.1"
 edition = "2021"
 description = "A comprehensive function-like macro, for concisely defining parameterized tests."
 authors = ["Andy <andrew.dunn@ajja.org.uk>"]
