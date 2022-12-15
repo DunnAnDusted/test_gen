@@ -135,12 +135,12 @@ pub fn test_gen(tokens: TokenStream) -> TokenStream {
 ///
 /// This includes:
 ///
-/// * Attributes to apply to every test case
-/// * The separator before the helper function (for preserving spans)
+/// * The attributes to apply to every test case
+/// * The separator before the helper function
 /// * The helper function for driving the tests
-/// * Arguments to pass to the helper function for every test
+/// * The arguments to pass to the helper function for every test
 /// * The default return type for the helper function
-/// * Formatting elements (for preserving spans)
+/// * The fat arrow before the braces surrounding the test cases
 /// * The values for producing the resulting test
 #[derive(Clone)]
 struct TestHelper {
@@ -335,12 +335,12 @@ impl ToTokens for Separator {
 /// This includes:
 ///
 /// * The name it will be assigned
-/// * Formatting elements (for preserving spans)
+/// * The separator colon
 /// * The arguments to specify its behaviour (see `CaseArgs` for more detail)
 #[derive(Clone)]
 struct TestCase {
     fn_name: Ident,
-    colon: Colon,
+    colon: Colon, // Preserved for span
     args: CaseArgs,
 }
 
@@ -376,13 +376,13 @@ impl ToTokens for TestCase {
 ///
 /// This includes:
 ///
-/// * Formatting elements (for preserving spans)
-/// * Attributes to apply to the specific test case
+/// * The surrounding braces
+/// * The attributes to apply to the specific test case
 /// * The arguments to pass to the helper function for the specific test case
 /// * The expected return type for the specific test case
 #[derive(Clone)]
 struct CaseArgs {
-    braces: Brace,
+    braces: Brace, // Preserved for span
     attrs: Vec<Attribute>,
     args: FnArgs,
     return_type: Option<ReturnType>,
@@ -433,7 +433,7 @@ impl ToTokens for CaseArgs {
 /// A type representing a list of arguments, and the parentheise around them.
 #[derive(Clone)]
 struct FnArgs {
-    parens: Paren,
+    parens: Paren, // Preserved for span
     args: Punctuated<Expr, Comma>,
 }
 
