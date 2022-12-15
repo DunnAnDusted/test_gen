@@ -46,7 +46,7 @@ use syn::{
     parse::{Parse, ParseStream, Result},
     parse_quote,
     punctuated::Punctuated,
-    token::{Brace, Paren, RArrow},
+    token::{Brace, Paren},
     Attribute, Error, Expr, Ident, Path, Token, Type,
 };
 
@@ -150,7 +150,7 @@ struct TestHelper {
     static_args: Option<FnArgs>,
     static_return_type: Option<ReturnType>,
     farrow: Token![=>], // Preserved for span
-    braces: Brace,    // Preserved for span
+    braces: Brace,      // Preserved for span
     cases: Punctuated<TestCase, Token![,]>,
 }
 
@@ -462,7 +462,7 @@ impl ToTokens for FnArgs {
 /// A type representing the right-arrow and function's return type signature.
 #[derive(Clone)]
 struct ReturnType {
-    arrow: RArrow,
+    arrow: Token![->],
     return_type: Type,
 }
 
