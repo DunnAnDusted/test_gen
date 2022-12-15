@@ -241,7 +241,7 @@ impl Parse for TestHelper {
             .map_err(|err| Error::new(err.span(), "expected helper function"))?;
         let static_args = input.peek(Paren).then(|| input.parse()).transpose()?;
         let static_return_type = input.call(ReturnType::try_parse)?;
-        let farrow = input.parse::<Token![=>]>()?;
+        let farrow = input.parse()?;
         let cases;
         let braces = braced!(cases in input);
         // If the contents of the`cases` is empty,
@@ -351,7 +351,7 @@ impl Parse for TestCase {
         let fn_name = input
             .parse()
             .map_err(|err| Error::new(err.span(), "expected test case name"))?;
-        let colon = input.parse::<Token![:]>()?;
+        let colon = input.parse()?;
         let args = input.parse()?;
 
         let out = TestCase {
