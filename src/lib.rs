@@ -444,7 +444,8 @@ impl Parse for FnArgs {
         // Using `punctuated::parse_separated_nonempty` in this case,
         // because if this type is being parsed, arguments should be expected,
         // and trailing commas look sloppy...
-        let args = inner.call(Punctuated::parse_separated_nonempty)
+        let args = inner
+            .call(Punctuated::parse_separated_nonempty)
             .map_err(|err| Error::new(err.span(), "expected function arguments"))?;
 
         Ok(Self { parens, args })
