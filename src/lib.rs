@@ -335,7 +335,7 @@ impl ToTokens for Separator {
 /// This includes:
 ///
 /// * The name it will be assigned
-/// * The separator color 
+/// * The separator colon
 /// * The arguments to specify its behaviour (see `CaseArgs` for more detail)
 #[derive(Clone)]
 struct TestCase {
@@ -376,7 +376,7 @@ impl ToTokens for TestCase {
 ///
 /// This includes:
 ///
-/// * The surrounding braces 
+/// * The surrounding braces
 /// * The attributes to apply to the specific test case
 /// * The arguments to pass to the helper function for the specific test case
 /// * The expected return type for the specific test case
