@@ -46,7 +46,7 @@ use syn::{
     parse::{Parse, ParseStream, Result},
     parse_quote,
     punctuated::Punctuated,
-    token::{Brace, Colon, Comma, FatArrow, Paren, RArrow},
+    token::{Brace, Comma, FatArrow, Paren, RArrow},
     Attribute, Error, Expr, Ident, Path, Token, Type,
 };
 
@@ -340,7 +340,7 @@ impl ToTokens for Separator {
 #[derive(Clone)]
 struct TestCase {
     fn_name: Ident,
-    colon: Colon, // Preserved for span
+    colon: Token![:], // Preserved for span
     args: CaseArgs,
 }
 
