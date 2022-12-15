@@ -46,7 +46,7 @@ use syn::{
     parse::{Parse, ParseStream, Result},
     parse_quote,
     punctuated::Punctuated,
-    token::{Brace, Colon, Comma, FatArrow, Paren, RArrow},
+    token::{Brace, Paren},
     Attribute, Error, Expr, Ident, Path, Token, Type,
 };
 
@@ -149,9 +149,9 @@ struct TestHelper {
     helper: Path,
     static_args: Option<FnArgs>,
     static_return_type: Option<ReturnType>,
-    farrow: FatArrow, // Preserved for span
-    braces: Brace,    // Preserved for span
-    cases: Punctuated<TestCase, Comma>,
+    farrow: Token![=>], // Preserved for span
+    braces: Brace,      // Preserved for span
+    cases: Punctuated<TestCase, Token![,]>,
 }
 
 impl TestHelper {
@@ -340,7 +340,7 @@ impl ToTokens for Separator {
 #[derive(Clone)]
 struct TestCase {
     fn_name: Ident,
-    colon: Colon, // Preserved for span
+    colon: Token![:], // Preserved for span
     args: CaseArgs,
 }
 
@@ -434,7 +434,7 @@ impl ToTokens for CaseArgs {
 #[derive(Clone)]
 struct FnArgs {
     parens: Paren, // Preserved for span
-    args: Punctuated<Expr, Comma>,
+    args: Punctuated<Expr, Token![,]>,
 }
 
 impl Parse for FnArgs {
@@ -462,7 +462,7 @@ impl ToTokens for FnArgs {
 /// A type representing the right-arrow and function's return type signature.
 #[derive(Clone)]
 struct ReturnType {
-    arrow: RArrow,
+    arrow: Token![->],
     return_type: Type,
 }
 
