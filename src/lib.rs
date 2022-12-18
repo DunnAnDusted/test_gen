@@ -472,11 +472,10 @@ impl Parse for ReturnType {
 
         // Default error message is a bit obtuse in this case,
         // so it's mapped to a more specific bespoke error instead.
-        let return_type = input
+        input
             .parse()
-            .map_err(|err| Error::new(err.span(), "expected a return type"))?;
-
-        Ok(Self { arrow, return_type })
+            .map_err(|err| Error::new(err.span(), "expected a return type"))
+            .map(|return_type| Self { arrow, return_type })
     }
 }
 
