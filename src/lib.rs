@@ -400,16 +400,13 @@ impl Parse for CaseArgs {
         }
 
         let args = inner.parse()?;
-        let return_type = inner.call(ReturnType::try_parse)?;
 
-        let out = CaseArgs {
+        inner.call(ReturnType::try_parse).map(|return_type| Self {
             braces,
             attrs,
             args,
             return_type,
-        };
-
-        Ok(out)
+        })
     }
 }
 
