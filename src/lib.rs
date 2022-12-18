@@ -244,6 +244,7 @@ impl Parse for TestHelper {
         let farrow = input.parse()?;
         let cases;
         let braces = braced!(cases in input);
+
         // If the contents of the`cases` is empty,
         // `ParseBuffer::parse_terminated` will simply produce an empty
         // `Punctuated` struct, and no error. On the other hand,
@@ -254,23 +255,20 @@ impl Parse for TestHelper {
         // Instead, its explicitly checked whether `cases` is empty,
         // resulting in a bespoke error which provides an explanation which is actually
         // helpful.
-        let cases = cases
+        cases
             .is_empty()
             .then(|| Error::new(cases.span(), "expected test cases"))
-            .map_or_else(|| cases.parse_terminated(TestCase::parse), Result::Err)?;
-
-        let out = TestHelper {
-            static_attrs,
-            separator,
-            helper,
-            static_args,
-            static_return_type,
-            farrow,
-            braces,
-            cases,
-        };
-
-        Ok(out)
+            .map_or_else(|| cases.parse_terminated(TestCase::parse), Result::Err)
+            .map(|cases| Self {
+                static_attrs,
+                separator,
+                helper,
+                static_args,
+                static_return_type,
+                farrow,
+                braces,
+                cases,
+            })
     }
 }
 
