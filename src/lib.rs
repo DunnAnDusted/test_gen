@@ -350,15 +350,12 @@ impl Parse for TestCase {
             .parse()
             .map_err(|err| Error::new(err.span(), "expected test case name"))?;
         let colon = input.parse()?;
-        let args = input.parse()?;
 
-        let out = TestCase {
+        input.parse().map(|args| Self {
             fn_name,
             colon,
             args,
-        };
-
-        Ok(out)
+        })
     }
 }
 
