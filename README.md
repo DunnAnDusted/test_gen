@@ -21,7 +21,7 @@ cargo add test_gen --dev
 Or alternatively, by adding the following lines to its `Cargo.toml` file:
 ```toml
 [dev-dependancies]
-test_gen = "0.2.0"
+test_gen = "0.2.2"
 ```
 
 ## Examples
