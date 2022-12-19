@@ -159,13 +159,11 @@ impl TestHelper {
     fn restructure(self) -> TokenStream2 {
         let Self {
             static_attrs,
-            separator: _,
             helper,
             mut static_args,
             static_return_type,
-            farrow: _,
-            braces: _,
             cases,
+            ..
         } = self;
 
         // Appends trailing punctuation when static args are specified,
@@ -185,17 +183,16 @@ impl TestHelper {
             .map(|case| -> TokenStream2 {
                 let TestCase {
                     fn_name,
-                    colon: _,
                     args:
                         CaseArgs {
-                            braces: _,
                             attrs,
-                            args,
+                            args: FnArgs { args, .. },
                             return_type,
+                            ..
                         },
+                    ..
                 } = case;
 
-                let args = &args.args;
                 // Specifies the default return type as an alternate value.
                 let return_type = return_type.as_ref().or(static_return_type);
 
