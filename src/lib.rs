@@ -241,6 +241,7 @@ impl Parse for TestHelper {
         let farrow = input.parse()?;
         let cases;
         let braces = braced!(cases in input);
+
         // If the contents of the`cases` is empty,
         // `ParseBuffer::parse_terminated` will simply produce an empty
         // `Punctuated` struct, and no error. On the other hand,
@@ -251,23 +252,20 @@ impl Parse for TestHelper {
         // Instead, its explicitly checked whether `cases` is empty,
         // resulting in a bespoke error which provides an explanation which is actually
         // helpful.
-        let cases = cases
+        cases
             .is_empty()
             .then(|| Error::new(cases.span(), "expected test cases"))
-            .map_or_else(|| cases.parse_terminated(TestCase::parse), Result::Err)?;
-
-        let out = TestHelper {
-            static_attrs,
-            separator,
-            helper,
-            static_args,
-            static_return_type,
-            farrow,
-            braces,
-            cases,
-        };
-
-        Ok(out)
+            .map_or_else(|| cases.parse_terminated(TestCase::parse), Result::Err)
+            .map(|cases| Self {
+                static_attrs,
+                separator,
+                helper,
+                static_args,
+                static_return_type,
+                farrow,
+                braces,
+                cases,
+            })
     }
 }
 
@@ -349,15 +347,12 @@ impl Parse for TestCase {
             .parse()
             .map_err(|err| Error::new(err.span(), "expected test case name"))?;
         let colon = input.parse()?;
-        let args = input.parse()?;
 
-        let out = TestCase {
+        input.parse().map(|args| Self {
             fn_name,
             colon,
             args,
-        };
-
-        Ok(out)
+        })
     }
 }
 
@@ -402,16 +397,13 @@ impl Parse for CaseArgs {
         }
 
         let args = inner.parse()?;
-        let return_type = inner.call(ReturnType::try_parse)?;
 
-        let out = CaseArgs {
+        inner.call(ReturnType::try_parse).map(|return_type| Self {
             braces,
             attrs,
             args,
             return_type,
-        };
-
-        Ok(out)
+        })
     }
 }
 
@@ -441,11 +433,10 @@ impl Parse for FnArgs {
         // Using `punctuated::parse_separated_nonempty` in this case,
         // because if this type is being parsed, arguments should be expected,
         // and trailing commas look sloppy...
-        let args = inner
+        inner
             .call(Punctuated::parse_separated_nonempty)
-            .map_err(|err| Error::new(err.span(), "expected function arguments"))?;
-
-        Ok(Self { parens, args })
+            .map_err(|err| Error::new(err.span(), "expected function arguments"))
+            .map(|args| Self { parens, args })
     }
 }
 
@@ -478,11 +469,10 @@ impl Parse for ReturnType {
 
         // Default error message is a bit obtuse in this case,
         // so it's mapped to a more specific bespoke error instead.
-        let return_type = input
+        input
             .parse()
-            .map_err(|err| Error::new(err.span(), "expected a return type"))?;
-
-        Ok(Self { arrow, return_type })
+            .map_err(|err| Error::new(err.span(), "expected a return type"))
+            .map(|return_type| Self { arrow, return_type })
     }
 }
 
