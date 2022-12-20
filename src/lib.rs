@@ -155,7 +155,7 @@ struct TestHelper {
 }
 
 impl TestHelper {
-    /// Consumes the `TestHelper`, and constructs the token stream of the resulting test cases.
+    /// Produces the tokens for the test cases represented by the value.
     fn restructure(self) -> TokenStream2 {
         let Self {
             static_attrs,
