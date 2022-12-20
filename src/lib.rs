@@ -484,6 +484,8 @@ mod tests {
     use super::*;
 
     fn parse_to_tokens<P: Parse + ToTokens>(p: &'static str) {
+        // Parses parameter as `proc_macro2::TokenStream` acts as a degree of fool-proofing,
+        // because the relevant `Display` implementation, doesn't account for formatting of the parsed source...
         let tokens: TokenStream2 = p.parse().expect("string could not be parsed as tokens");
 
         let parsed = syn::parse_str::<P>(&p)
