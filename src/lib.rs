@@ -421,6 +421,7 @@ impl Parse for FnArgs {
     fn parse(input: ParseStream) -> Result<Self> {
         let inner;
         let parens = parenthesized!(inner in input);
+
         // Using `punctuated::parse_separated_nonempty` in this case,
         // because if this type is being parsed, arguments should be expected,
         // and trailing commas look sloppy...
