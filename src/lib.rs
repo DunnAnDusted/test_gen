@@ -166,12 +166,11 @@ impl TestHelper {
             ..
         } = self;
 
-        // Appends trailing punctuation when static args are specified,
-        // to ensure it doesn't conflict with the case specific args,
-        // and maps away the parens.
-        let static_args = static_args.as_mut().map(|x| {
-            x.args.push_punct(Default::default());
-            &x.args
+        // Ensures any static arguments don't conflict with the case specific args,
+        // by dropping the parens, and appending trailing punctuation to the args.
+        let static_args = static_args.as_mut().map(|FnArgs { args, .. }| {
+            args.push_punct(Default::default());
+            args
         });
 
         // Mapped to an immutable referance, to ensure the value
