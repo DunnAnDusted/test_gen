@@ -189,8 +189,6 @@ impl TestHelper {
                         },
                     ..
                 } = case;
-
-                // Specifies the default return type as an alternate value.
                 let return_type = return_type.as_ref().or(static_return_type);
 
                 // #(#VAR)* syntax behaves similarly to `macro_rules!` equivilent,
