@@ -378,8 +378,8 @@ impl Parse for CaseArgs {
 
         let attrs = inner.call(Attribute::parse_outer)?;
 
-        // We can actually usefully validate that we're recieving the next token we expect in this
-        // case! Hooray!
+        // We can actually usefully validate
+        // we're recieving the next token we expect in this case! Hooray!
         if !inner.peek(Paren) {
             return Err(Error::new(
                 inner.span(),
