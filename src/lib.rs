@@ -155,7 +155,7 @@ struct TestHelper {
 }
 
 impl TestHelper {
-    /// Consumes the `TestHelper`, and constructs the token stream of the resulting test cases.
+    /// Produces the tokens for the test cases represented by the value.
     fn restructure(self) -> TokenStream2 {
         let Self {
             static_attrs,
@@ -172,9 +172,6 @@ impl TestHelper {
             args.push_punct(Default::default());
             args
         });
-
-        // Mapped to an immutable referance, to ensure the value
-        // isn't moved/consumed.
         let static_return_type = static_return_type.as_ref();
 
         cases
@@ -191,16 +188,10 @@ impl TestHelper {
                         },
                     ..
                 } = case;
-
-                // Specifies the default return type as an alternate value.
                 let return_type = return_type.as_ref().or(static_return_type);
 
                 // #(#VAR)* syntax behaves similarly to `macro_rules!` equivilent,
                 // for items implementing `IntoIterator<Item: ToTokens>`.
-                //
-                // `return_type` can be referanced directly,
-                // due to `ToTokens` being implemented for `Option<T: ToTokens>`,
-                // and `ReturnType` including the `->` as part of its `ToTokens` implementation.
                 //
                 // Separating comma already added to `static_args`,
                 // ensuring it's conditional inclusion.
@@ -219,7 +210,6 @@ impl TestHelper {
 
 impl Parse for TestHelper {
     fn parse(input: ParseStream) -> Result<Self> {
-        // Parses any attributes to apply to all test cases.
         let static_attrs = input.call(Attribute::parse_outer)?;
 
         // TODO: A separator preceeding the helper function specification, isn't a great solution,
@@ -340,7 +330,8 @@ struct TestCase {
 
 impl Parse for TestCase {
     fn parse(input: ParseStream) -> Result<Self> {
-        // Maps to a bespoke error, as noting that you expect a general "Ident",
+        // Maps to a bespoke error,
+        // as stating generally than an "Ident" was expected,
         // isn't particularly helpful...
         let fn_name = input
             .parse()
@@ -386,8 +377,8 @@ impl Parse for CaseArgs {
 
         let attrs = inner.call(Attribute::parse_outer)?;
 
-        // We can actually usefully validate that we're recieving the next token we expect in this
-        // case! Hooray!
+        // We can actually usefully validate
+        // we're recieving the next token we expect in this case! Hooray!
         if !inner.peek(Paren) {
             return Err(Error::new(
                 inner.span(),
@@ -429,6 +420,7 @@ impl Parse for FnArgs {
     fn parse(input: ParseStream) -> Result<Self> {
         let inner;
         let parens = parenthesized!(inner in input);
+
         // Using `punctuated::parse_separated_nonempty` in this case,
         // because if this type is being parsed, arguments should be expected,
         // and trailing commas look sloppy...
@@ -491,6 +483,8 @@ mod tests {
     use super::*;
 
     fn parse_to_tokens<P: Parse + ToTokens>(p: &'static str) {
+        // Parses parameter as `proc_macro2::TokenStream` acts as a degree of fool-proofing,
+        // because the relevant `Display` implementation, doesn't account for formatting of the parsed source...
         let tokens: TokenStream2 = p.parse().expect("string could not be parsed as tokens");
 
         let parsed = syn::parse_str::<P>(&p)
