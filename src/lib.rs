@@ -211,7 +211,6 @@ impl TestHelper {
 
 impl Parse for TestHelper {
     fn parse(input: ParseStream) -> Result<Self> {
-        // Parses any attributes to apply to all test cases.
         let static_attrs = input.call(Attribute::parse_outer)?;
 
         // TODO: A separator preceeding the helper function specification, isn't a great solution,
