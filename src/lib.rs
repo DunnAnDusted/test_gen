@@ -331,7 +331,8 @@ struct TestCase {
 
 impl Parse for TestCase {
     fn parse(input: ParseStream) -> Result<Self> {
-        // Maps to a bespoke error, as noting that you expect a general "Ident",
+        // Maps to a bespoke error,
+        // as stating generally than an "Ident" was expected,
         // isn't particularly helpful...
         let fn_name = input
             .parse()
