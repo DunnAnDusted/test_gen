@@ -194,10 +194,6 @@ impl TestHelper {
                 // #(#VAR)* syntax behaves similarly to `macro_rules!` equivilent,
                 // for items implementing `IntoIterator<Item: ToTokens>`.
                 //
-                // `return_type` can be referanced directly,
-                // due to `ToTokens` being implemented for `Option<T: ToTokens>`,
-                // and `ReturnType` including the `->` as part of its `ToTokens` implementation.
-                //
                 // Separating comma already added to `static_args`,
                 // ensuring it's conditional inclusion.
                 parse_quote! {
