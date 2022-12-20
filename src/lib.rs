@@ -173,9 +173,6 @@ impl TestHelper {
             x.args.push_punct(Default::default());
             &x.args
         });
-
-        // Mapped to an immutable referance, to ensure the value
-        // isn't moved/consumed.
         let static_return_type = static_return_type.as_ref();
 
         cases
