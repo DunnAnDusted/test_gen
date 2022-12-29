@@ -231,7 +231,7 @@ impl Parse for TestHelper {
         let cases;
         let braces = braced!(cases in input);
 
-        // If the contents of the`cases` is empty,
+        // If the contents of `cases` is empty,
         // `ParseBuffer::parse_terminated` will simply produce an empty
         // `Punctuated` struct, and no error. On the other hand,
         // `Punctuated::parse_separated_nonempty` falls back on the parsing error
@@ -378,7 +378,7 @@ impl Parse for CaseArgs {
         let attrs = inner.call(Attribute::parse_outer)?;
 
         // We can actually usefully validate
-        // we're recieving the next token we expect in this case! Hooray!
+        // we're receiving the next token we expect in this case! Hooray!
         if !inner.peek(Paren) {
             return Err(Error::new(
                 inner.span(),
