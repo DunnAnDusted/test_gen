@@ -157,6 +157,9 @@ struct TestHelper {
 impl TestHelper {
     /// Produces the tokens for the test cases represented by the value.
     fn restructure(self) -> TokenStream2 {
+        // Uses destructuring, due to use `self`,
+        // not being supported in quoting macros,
+        // as well as allowing for the consumption of `cases`.
         let Self {
             static_attrs,
             helper,
