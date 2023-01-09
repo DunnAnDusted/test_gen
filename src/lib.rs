@@ -127,7 +127,7 @@ pub fn test_gen(tokens: TokenStream) -> TokenStream {
     // because `proc_macro2::TokenStream` needs to be converted back
     // to `proc_macro::TokenStream` before it can be returned.
     syn::parse(tokens)
-        .map_or_else(Error::into_compile_error, TestHelper::restructure)
+        .map_or_else(Error::into_compile_error, MacroHelper::restructure)
         .into()
 }
 
@@ -143,7 +143,7 @@ pub fn test_gen(tokens: TokenStream) -> TokenStream {
 /// * The fat arrow before the braces surrounding the test cases
 /// * The values for producing the resulting test
 #[derive(Clone)]
-struct TestHelper {
+struct MacroHelper {
     static_attrs: Vec<Attribute>,
     separator: Separator, // Preserved for span
     helper: Path,
@@ -154,7 +154,7 @@ struct TestHelper {
     cases: Punctuated<TestCase, Token![,]>,
 }
 
-impl TestHelper {
+impl MacroHelper {
     /// Produces the tokens for the test cases represented by the value.
     fn restructure(self) -> TokenStream2 {
         // Uses destructuring, due to use `self`,
@@ -211,7 +211,7 @@ impl TestHelper {
     }
 }
 
-impl Parse for TestHelper {
+impl Parse for MacroHelper {
     fn parse(input: ParseStream) -> Result<Self> {
         let static_attrs = input.call(Attribute::parse_outer)?;
 
@@ -261,7 +261,7 @@ impl Parse for TestHelper {
     }
 }
 
-impl ToTokens for TestHelper {
+impl ToTokens for MacroHelper {
     fn to_tokens(&self, tokens: &mut TokenStream2) {
         // `ToTokens` isn't implemented for anything like `&[T: ToTokens]`
         // or `(Into)Iterator<Item: ToTokens>`, so appending them iteratively
@@ -520,6 +520,6 @@ mod tests {
 
     #[test]
     fn test_helper_parsing() {
-        parse_to_tokens::<TestHelper>("#[should_panic] fn Into::into -> (usize, usize) => { test: { #[ignore] (1, 2) -> usize } }");
+        parse_to_tokens::<MacroHelper>("#[should_panic] fn Into::into -> (usize, usize) => { test: { #[ignore] (1, 2) -> usize } }");
     }
 }
