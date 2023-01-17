@@ -228,6 +228,9 @@ impl Parse for MacroHelper {
         let helper = input
             .parse()
             .map_err(|err| Error::new(err.span(), "expected helper function"))?;
+
+        // Parsing is only attempted, if parenthese are peeked,
+        // as this would indicate the user wishes to specify static args.
         let static_args = input.peek(Paren).then(|| input.parse()).transpose()?;
         let static_return_type = input.call(ReturnType::try_parse)?;
         let farrow = input.parse()?;
